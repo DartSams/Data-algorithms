@@ -12,8 +12,22 @@ class dll:
         self.size=0
 
     def add1(self,value):
-        self.head=Node(value)
+        if self.head==None:
+            self.head=Node(value)
+        else:
+            curr=self.head
+            num=1
+            while curr.nextNode:
+                num+=1
+                curr=curr.nextNode
 
+            if curr.nextNode == None:
+                self.tail=curr.nextNode=Node(value)
+                self.size+=1
+                curr.nextNode.index+=num
+
+        self.set_reverse_node() 
+        
     def append1(self,value):
         curr=self.head
         num=1
@@ -36,8 +50,7 @@ class dll:
 
     def remove_element(self,index):
         curr=self.head
-        num=0
-            
+        num=0            
         while curr:
             num+=1
             curr=curr.nextNode
@@ -65,11 +78,9 @@ class dll:
         
     def select(self,index):
         curr=self.head
-        num=0
         while curr:
-            if num == index:
+            if curr.index == index:
                 break
-            num+=1
             curr=curr.nextNode
         return curr
 
@@ -84,7 +95,6 @@ class dll:
 
     def traverse_reverse(self):
         print("Reversing Linked List ")
-        self.set_reverse_node()
         
         curr=self.tail
         while curr:
@@ -100,6 +110,6 @@ for i in range(2,11):
     a.append1(i)
 
 # a.remove_element(0)
-print(a.select(2))
-a.traverse()
-# a.traverse_reverse()
+# print(a.select(2).value)
+# a.traverse()
+a.traverse_reverse()
