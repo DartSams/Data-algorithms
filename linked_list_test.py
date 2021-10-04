@@ -24,7 +24,7 @@ class dll:
             if curr.nextNode == None:
                 self.tail=curr.nextNode=Node(value)
                 self.size+=1
-                curr.nextNode.index+=num
+                # curr.nextNode.index+=num
 
         self.set_reverse_node() 
         
@@ -75,7 +75,48 @@ class dll:
             if index > self.size:
                 print("Index Doesnt exist")
                 break
+
+    def reset_index(self):
+        curr=self.head
+        num=1
+        while curr:
+            curr.index+=num
+            num+=1
+            curr=curr.nextNode
         
+    def insert_after(self,index,value):
+        curr=self.head
+        num=0
+        before=self.select(index-1)
+        after=self.select(index+1)
+        # print(after)
+        new_node=before.nextNode=Node(value)
+        new_node.nextNode=after 
+        new_node.prevNode=before
+        after.prevNode=new_node
+
+        # print(before.prevNode.value)
+        # print(before.value)
+        # print(before.nextNode.value)
+        # print("")
+        # print(new_node.prevNode.value)
+        # print(new_node.value)
+        # print(new_node.nextNode.value)
+        # print("")
+        # print(after.prevNode.value)
+        # print(after.value)
+        # print(after.nextNode.value)
+
+        curr=self.head
+        reset_num=1
+        while curr:
+            curr.index=0
+            reset_num+=1
+            curr=curr.nextNode
+
+        self.reset_index()
+
+
     def select(self,index):
         curr=self.head
         while curr:
@@ -85,12 +126,17 @@ class dll:
         return curr
 
     def traverse(self):
+        # self.reset_index()
         curr=self.head
         while curr:
             if curr.nextNode:
                 print(f"Index:{curr.index},Value:{curr.value},Next:{curr.nextNode.value}")
+                # print(f"Index:{curr.index},Previouse:{curr.prevNode},Value:{curr.value},Next:{curr.nextNode.value}")
+                
             else:
                 print(f"Index:{curr.index},Value:{curr.value},Next:{curr.nextNode}")
+                # print(f"Index:{curr.index},Previouse:{curr.prevNode},Value:{curr.value},Next:{curr.nextNode}")
+
             curr=curr.nextNode
 
     def traverse_reverse(self):
@@ -99,9 +145,9 @@ class dll:
         curr=self.tail
         while curr:
             if curr.prevNode:
-                print(f"Prev:{curr.prevNode.value},Value:{curr.value}")
+                print(f"Index:{curr.index},Prev:{curr.prevNode.value},Value:{curr.value}")
             else:
-                print(f"Prev:{curr.prevNode},Value:{curr.value}")
+                print(f"Index:{curr.index},Prev:{curr.prevNode},Value:{curr.value}")
             curr=curr.prevNode
 
 a=dll()
@@ -111,5 +157,8 @@ for i in range(2,11):
 
 # a.remove_element(0)
 # print(a.select(2).value)
-# a.traverse()
+a.insert_after(3,19)
+a.traverse()
+# print(a.select(6).value)
+print("")
 a.traverse_reverse()
